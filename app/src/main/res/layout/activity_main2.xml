@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rejestracja"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StronaGlowna">
+
+    <Button
+        android:id="@+id/stary_case"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/przes_ane_case_y"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.531" />
+
+    <TextView
+        android:id="@+id/nazwa_apki"
+        android:layout_width="251dp"
+        android:layout_height="36dp"
+        android:background="#4CAF50"
+        android:text="@string/apka_in_yniera"
+        android:textAlignment="center"
+        android:textColor="#263238"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.178" />
+
+    <Button
+        android:id="@+id/nowy_case"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nowy_case"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.322" />
+
+    <Button
+        android:id="@+id/wyloguj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wyloguj"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+</androidx.constraintlayout.widget.ConstraintLayout>

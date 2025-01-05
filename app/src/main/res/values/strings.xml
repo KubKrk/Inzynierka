@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Inżynierka2</string>
+    <string name="haslo">Hasło</string>
+    <string name="zaloguj">Zaloguj się</string>
+    <string name="imie">Imie</string>
+    <string name="dalej">Dalej</string>
+    <string name="zapomniane">Zapomniałeś hasło..</string>
+    <string name="textview">TextView</string>
+    <string name="strona_2">strona 2</string>
+    <string name="zarejestruj_si">Zarejestruj się</string>
+    <string name="albo">Albo</string>
+    <string name="podaj_imi_i_has_o">Podaj imię i hasło</string>
+    <string name="zarejestruj">Zarejestruj</string>
+    <string name="back">Back</string>
+    <string name="podaj_email">Podaj email</string>
+    <string name="resetuj_has_o">Resetuj hasło</string>
+    <string name="e_mail">e-mail</string>
+    <string name="e_mail1">e-mail</string>
+    <string name="podaj_e_mail_i_has_o">Podaj e-mail i hasło</string>
+    <string name="przes_ane_case_y">Przesłane case\'y</string>
+    <string name="apka_in_yniera">APKA INŻYNIERA</string>
+    <string name="nowy_case">Nowy case</string>
+    <string name="wyloguj">Wyloguj</string>
+    <string name="zaloguj12">Zaloguj</string>
+    <string name="zapami_taj_mnie">Zapamiętaj mnie</string>
+    <string name="dane_klienta">Dane Klienta</string>
+    <string name="dane_samochodu">Dane Samochodu</string>
+    <string name="podpisz_dokumenty">Podpisz dokumenty</string>
+    <string name="zako_cz">Zakończ</string>
+    <string name="zdj_cia">Zdjęcia</string>
+</resources>
