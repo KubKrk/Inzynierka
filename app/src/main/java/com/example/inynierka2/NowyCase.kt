@@ -23,6 +23,25 @@ class NowyCase : AppCompatActivity() {
             val cofka = Intent(this, StronaGlowna::class.java)
             startActivity(cofka)
         }
-
+        val new = findViewById<Button>(R.id.DaneKlienta)
+        new.setOnClickListener{
+            val newC = Intent(this, Dane::class.java)
+            startActivity(newC)
+        }
+        val dS = findViewById<Button>(R.id.daneAuta)
+        dS.setOnClickListener{
+            val newD = Intent(this, Furka::class.java)
+            startActivity(newD)
+        }
+        val dU = findViewById<Button>(R.id.Zdj)
+        dU.setOnClickListener{
+            val newD = Intent(this, Ubezpieczalnia::class.java)
+            startActivity(newD)
+        }
+        val dP = findViewById<Button>(R.id.podpisy)
+        dP.setOnClickListener{
+            val newD = Intent(this, Podpis::class.java)
+            startActivity(newD)
+        }
     }
 }

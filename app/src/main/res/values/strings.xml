@@ -28,4 +28,20 @@
     <string name="podpisz_dokumenty">Podpisz dokumenty</string>
     <string name="zako_cz">Zakończ</string>
     <string name="zdj_cia">Zdjęcia</string>
+    <string name="utw_rz_case">Utwórz case</string>
+    <string name="imi_klienta">Imię klienta</string>
+    <string name="nazwisko_klienta">Nazwisko klienta</string>
+    <string name="telefon_klienta">Telefon klienta</string>
+    <string name="pesel">Pesel</string>
+    <string name="przejd_dalej">Przejdź dalej</string>
+    <string name="dane_ubezpieczalni">Dane ubezpieczalni</string>
+    <string name="marka_samochodu">Marka samochodu</string>
+    <string name="model_samochodu">Model samochodu</string>
+    <string name="tablice_rejestracyjne">Tablice rejestracyjne</string>
+    <string name="data_pierwszej_rejestracji">Data pierwszej rejestracji</string>
+    <string name="ubezpieczalnia_poszkodowanego">Ubezpieczalnia poszkodowanego</string>
+    <string name="ubezpieczalnia_sprawcy">Ubezpieczalnia sprawcy</string>
+    <string name="tablice_rejestracyjne_sprawcy">Tablice rejestracyjne sprawcy</string>
+    <string name="marka_samochodu_sprawcy">Marka samochodu sprawcy</string>
+    <string name="wy_lij">Wyślij</string>
 </resources>
