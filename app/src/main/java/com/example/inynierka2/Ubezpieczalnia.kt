@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -52,15 +53,26 @@ class Ubezpieczalnia : AppCompatActivity() {
         }
 
         buttonNext.setOnClickListener {
+            // Sprawdź puste pola
+            val poszkod = editPoszkodUbezp.text.toString().trim()
+            val sprawca = editSprawcaUbezp.text.toString().trim()
+            val tablice1 = editBlachy1.text.toString().trim()
+            val marka1str = editMarka1.text.toString().trim()
+
+            if (poszkod.isEmpty() || sprawca.isEmpty() || tablice1.isEmpty() || marka1str.isEmpty()) {
+                Toast.makeText(this, "Uzupełnij wszystkie pola ubezpieczalni!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (DataHolder.currentCase == null) {
                 DataHolder.currentCase = CaseData()
             }
             val case = DataHolder.currentCase!!
 
-            case.poszkodInsurance = editPoszkodUbezp.text.toString().trim()
-            case.sprawcaInsurance = editSprawcaUbezp.text.toString().trim()
-            case.sprawcaCarPlates = editBlachy1.text.toString().trim()
-            case.sprawcaCarMark = editMarka1.text.toString().trim()
+            case.poszkodInsurance = poszkod
+            case.sprawcaInsurance = sprawca
+            case.sprawcaCarPlates = tablice1
+            case.sprawcaCarMark = marka1str
 
             // Dalej do Podpis
             val next = Intent(this, Podpis::class.java)

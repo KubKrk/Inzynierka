@@ -8,12 +8,25 @@
     android:layout_height="match_parent"
     tools:context=".Podpis">
 
-    <!-- Nasz SignaturePad (z biblioteki com.github.gcacace.signaturepad) -->
+    <!-- Przyciski i SignaturePad -->
+
+    <!-- 1) Przycisk "powrot" (zwykle tak się nazywa w Twoich layoutach) -->
+    <Button
+        android:id="@+id/powrot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        />
+
+    <!-- 2) SignaturePad -->
     <com.github.gcacace.signaturepad.views.SignaturePad
         android:id="@+id/signaturePad"
         android:layout_width="0dp"
         android:layout_height="400dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/powrot"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"
@@ -22,7 +35,7 @@
         android:background="#CCCCCC"
         tools:ignore="MissingConstraints"/>
 
-    <!-- Przycisk do wyczyszczenia podpisu -->
+    <!-- 3) Przycisk do wyczyszczenia podpisu -->
     <Button
         android:id="@+id/buttonClearSignature"
         android:layout_width="wrap_content"
@@ -34,7 +47,7 @@
         android:layout_marginLeft="16dp"
         tools:ignore="HardcodedText" />
 
-    <!-- Przycisk do zapisania podpisu -->
+    <!-- 4) Przycisk do zapisania podpisu -->
     <Button
         android:id="@+id/buttonSaveSignature"
         android:layout_width="wrap_content"

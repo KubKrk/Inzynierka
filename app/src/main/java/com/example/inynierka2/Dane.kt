@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,7 +18,7 @@ class Dane : AppCompatActivity() {
 
     private lateinit var editTextClientName: EditText
     private lateinit var editTextClientSurname: EditText
-    private lateinit var editTextExtraInfo: EditText   // to planowałeś jako PESEL
+    private lateinit var editTextExtraInfo: EditText   // PESEL
     private lateinit var editTextClientPhone: EditText
 
     @SuppressLint("MissingInflatedId")
@@ -34,13 +35,11 @@ class Dane : AppCompatActivity() {
         buttonPowrot = findViewById(R.id.powrot)
         buttonNext = findViewById(R.id.buttonCreateCase)
 
-        // EditTexty:
         editTextClientName = findViewById(R.id.editTextClientName)
         editTextClientSurname = findViewById(R.id.editTextClientSurname)
-        editTextExtraInfo = findViewById(R.id.editTextExtraInfo)  // pesel
+        editTextExtraInfo = findViewById(R.id.editTextExtraInfo)
         editTextClientPhone = findViewById(R.id.editTextClientPhone)
 
-        // Wypełnij polami, jeśli już istnieją w DataHolder
         val currentCase = DataHolder.currentCase
         if (currentCase != null) {
             editTextClientName.setText(currentCase.clientName)
@@ -50,24 +49,31 @@ class Dane : AppCompatActivity() {
         }
 
         buttonPowrot.setOnClickListener {
-            // Wracamy do NowyCase
             val cofka = Intent(this, NowyCase::class.java)
             startActivity(cofka)
         }
 
         buttonNext.setOnClickListener {
-            // Zapisz do DataHolder
+            val imie = editTextClientName.text.toString().trim()
+            val nazwisko = editTextClientSurname.text.toString().trim()
+            val pesel = editTextExtraInfo.text.toString().trim()
+            val telefon = editTextClientPhone.text.toString().trim()
+
+            // Sprawdź puste pola
+            if (imie.isEmpty() || nazwisko.isEmpty() || pesel.isEmpty() || telefon.isEmpty()) {
+                Toast.makeText(this, "Uzupełnij imię, nazwisko, PESEL i telefon!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (DataHolder.currentCase == null) {
                 DataHolder.currentCase = CaseData()
             }
             val case = DataHolder.currentCase!!
+            case.clientName = imie
+            case.clientSurname = nazwisko
+            case.clientPesel = pesel
+            case.clientPhone = telefon
 
-            case.clientName = editTextClientName.text.toString().trim()
-            case.clientSurname = editTextClientSurname.text.toString().trim()
-            case.clientPesel = editTextExtraInfo.text.toString().trim()
-            case.clientPhone = editTextClientPhone.text.toString().trim()
-
-            // Przejście do Furka
             val next = Intent(this, Furka::class.java)
             startActivity(next)
         }

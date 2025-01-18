@@ -2,23 +2,26 @@ package com.example.inynierka2
 
 data class CaseData(
     // DANE KLIENTA
-    var clientName: String = "",       // editTextClientName
-    var clientSurname: String = "",    // editTextClientSurname
-    var clientPesel: String = "",      // editTextExtraInfo
-    var clientPhone: String = "",      // editTextClientPhone
+    var clientName: String = "",
+    var clientSurname: String = "",
+    var clientPesel: String = "",
+    var clientPhone: String = "",
 
-    // DANE SAMOCHODU (naszego klienta)
-    var carMark: String = "",          // marka
-    var carModel: String = "",         // model
-    var carPlates: String = "",        // blachy (tablice rejestracyjne)
-    var carFirstRegDate: String = "",  // rej1 (data pierwszej rejestracji)
+    // DANE SAMOCHODU
+    var carMark: String = "",
+    var carModel: String = "",
+    var carFirstRegDate: String = "",
+    var carPlates: String = "",
 
-    // DANE UBEZPIECZALNI (poszkodowanego i sprawcy)
-    var poszkodInsurance: String = "", // ubezp (ubezpieczalnia poszkodowanego)
-    var sprawcaInsurance: String = "", // ubezp1 (ubezpieczalnia sprawcy)
-    var sprawcaCarPlates: String = "", // blachy1
-    var sprawcaCarMark: String = "",   // marka1
+    // DANE UBEZPIECZALNI
+    var poszkodInsurance: String = "",
+    var sprawcaInsurance: String = "",
+    var sprawcaCarPlates: String = "",
+    var sprawcaCarMark: String = "",
 
-    // PODPIS
-    var signatureUrl: String = ""
+    // PODPIS (może zostać puste)
+    var signatureUrl: String = "",
+
+    // ID właściciela (użytkownika Firebase)
+    var ownerId: String = ""
 )

@@ -8,8 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-
 
 class NowyCase : AppCompatActivity() {
 
@@ -20,8 +20,10 @@ class NowyCase : AppCompatActivity() {
     private lateinit var buttonUbezpieczalnia: Button
     private lateinit var buttonZakoncz: Button
 
-    // Zamiast `by lazy`, definiujemy zwykłe zmienne
+    // Baza Realtime Database:
     private val database = FirebaseDatabase.getInstance()
+    // Auth (żebyśmy mogli ustawić ownerId = user?.uid)
+    private val auth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,6 @@ class NowyCase : AppCompatActivity() {
             insets
         }
 
-        // Inicjalizacja DataHolder
         if (DataHolder.currentCase == null) {
             DataHolder.currentCase = CaseData()
         }
@@ -79,7 +80,7 @@ class NowyCase : AppCompatActivity() {
             return
         }
 
-        // Sprawdzamy, czy najważniejsze pola nie są puste (przykład)
+        // Walidacja pól (jak w Twoim kodzie)
         if (case.clientName.isEmpty() || case.clientSurname.isEmpty()) {
             Toast.makeText(this, "Uzupełnij dane klienta (imię, nazwisko)!", Toast.LENGTH_SHORT).show()
             return
@@ -97,11 +98,14 @@ class NowyCase : AppCompatActivity() {
             return
         }
 
+        // Dodaj ownerId = user?.uid
+        val user = auth.currentUser
+        case.ownerId = user?.uid ?: ""
+
         val casesRef = database.getReference("cases")
-        // generujemy klucz
         val newCaseRef = casesRef.push()
         val newCaseId = newCaseRef.key
-        // (Ostrzeżenie: Condition 'newCaseId == null' is always false – można pominąć)
+
         if (newCaseId == null) {
             Toast.makeText(this, "Błąd tworzenia klucza w bazie!", Toast.LENGTH_SHORT).show()
             return
@@ -110,14 +114,24 @@ class NowyCase : AppCompatActivity() {
         newCaseRef.setValue(case)
             .addOnSuccessListener {
                 Toast.makeText(this, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
-                // Wyzeruj DataHolder
+
+                // Wyzeruj DataHolder, by nie edytować dalej
                 DataHolder.currentCase = null
-                // Wróć np. do StronaGlowna
-                val intent = Intent(this, StronaGlowna::class.java)
+
+                // W tym miejscu decydujesz, dokąd user ma iść:
+                // - do StronaGlowna:
+                // val intent = Intent(this, StronaGlowna::class.java)
+
+                // - do PoprzedniCase (zobaczyć ostatni case):
+                // val intent = Intent(this, PoprzedniCase::class.java)
+
+                // - do CaseList (zobaczyć całą listę usera):
+                // val intent = Intent(this, CaseList::class.java)
+
+                val intent = Intent(this, StronaGlowna::class.java) // lub PoprzedniCase / CaseList
                 startActivity(intent)
                 finish()
             }
-            // Doprecyzuj typ parametru
             .addOnFailureListener { e: Exception ->
                 Toast.makeText(this, "Błąd zapisu: ${e.message}", Toast.LENGTH_SHORT).show()
             }
