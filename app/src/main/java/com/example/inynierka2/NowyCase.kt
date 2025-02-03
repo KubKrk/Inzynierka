@@ -80,7 +80,6 @@ class NowyCase : AppCompatActivity() {
             return
         }
 
-        // Walidacja pól (jak w Twoim kodzie)
         if (case.clientName.isEmpty() || case.clientSurname.isEmpty()) {
             Toast.makeText(this, "Uzupełnij dane klienta (imię, nazwisko)!", Toast.LENGTH_SHORT).show()
             return
@@ -98,7 +97,6 @@ class NowyCase : AppCompatActivity() {
             return
         }
 
-        // Dodaj ownerId = user?.uid
         val user = auth.currentUser
         case.ownerId = user?.uid ?: ""
 
@@ -115,20 +113,9 @@ class NowyCase : AppCompatActivity() {
             .addOnSuccessListener {
                 Toast.makeText(this, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
 
-                // Wyzeruj DataHolder, by nie edytować dalej
                 DataHolder.currentCase = null
 
-                // W tym miejscu decydujesz, dokąd user ma iść:
-                // - do StronaGlowna:
-                // val intent = Intent(this, StronaGlowna::class.java)
-
-                // - do PoprzedniCase (zobaczyć ostatni case):
-                // val intent = Intent(this, PoprzedniCase::class.java)
-
-                // - do CaseList (zobaczyć całą listę usera):
-                // val intent = Intent(this, CaseList::class.java)
-
-                val intent = Intent(this, StronaGlowna::class.java) // lub PoprzedniCase / CaseList
+                val intent = Intent(this, StronaGlowna::class.java)
                 startActivity(intent)
                 finish()
             }

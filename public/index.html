@@ -1,89 +1,304 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Inżynierka – Strona Web (Zrzut do PDF)</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <style>
+    .case-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .case-details {
+      border: 1px dashed #555;
+      padding: 10px;
+      margin-top: 20px;
+      display: none;
+      background-color: #fff;
+      color: #000;
+      position: relative;
+    }
+    .signature-img {
+      max-width: 300px;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body class="container my-4">
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.1.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.1.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.1.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+<h1>Inżynierka – Strona Web (Zrzut do PDF)</h1>
+<hr/>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+<!-- Formularz logowania -->
+<div id="login-form" class="mb-3">
+  <h2>Logowanie</h2>
+  <div class="mb-2">
+    <input class="form-control" type="email" id="email" placeholder="Email"/>
+  </div>
+  <div class="mb-2">
+    <input class="form-control" type="password" id="password" placeholder="Hasło"/>
+  </div>
+  <button class="btn btn-primary" id="loginBtn">Zaloguj</button>
+  <button class="btn btn-secondary" id="registerBtn">Zarejestruj</button>
+</div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+<!-- Sekcja dla zalogowanego użytkownika -->
+<div id="app" style="display: none;">
+  <h2>Witaj, <span id="userEmail"></span>!</h2>
+  <button class="btn btn-danger mb-3" id="logoutBtn">Wyloguj</button>
+  <hr/>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+  <h3>Lista case'ów:</h3>
+  <div id="casesList"></div>
+
+  <!-- Formatka szczegółów case'a -->
+  <div id="caseDetails" class="case-details">
+    <h4>Szczegóły case'a</h4>
+    <p><b>Imię:</b> <span id="detailName"></span></p>
+    <p><b>Nazwisko:</b> <span id="detailSurname"></span></p>
+    <p><b>PESEL:</b> <span id="detailPesel"></span></p>
+    <p><b>Telefon:</b> <span id="detailPhone"></span></p>
+
+    <p><b>Samochód:</b>
+      Marka: <span id="detailCarMark"></span>,
+      Model: <span id="detailCarModel"></span>,
+      Data rej: <span id="detailCarFirstReg"></span>,
+      Tablice: <span id="detailCarPlates"></span>
+    </p>
+
+    <p><b>Ubezp. poszkod.:</b> <span id="detailPoszkod"></span></p>
+    <p><b>Ubezp. sprawcy:</b> <span id="detailSprawca"></span></p>
+    <p><b>Tablice sprawcy:</b> <span id="detailSprawcaPlates"></span></p>
+    <p><b>Marka sprawcy:</b> <span id="detailSprawcaMark"></span></p>
+
+    <p><b>Podpis:</b></p>
+    <!-- Tutaj wstawiamy base64 (dataURL) zamiast crossOrigin -->
+    <img id="detailSignature" class="signature-img" alt="Podpis"/>
+
+    <!-- Przycisk generowania PDF (Zrzut) -->
+    <button class="btn btn-warning mt-3" id="pdfBtn">Pobierz PDF (zrzut)</button>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<!-- html2canvas (do zrzutu) -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- jsPDF do PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  /********** 1) KONFIG FIREBASE **********/
+  const firebaseConfig = {
+    apiKey: "AIzaSyCCNa6Wdf8qgt9wwoY5m_yYghqvYibCjyk",
+    authDomain: "baza-inzynierka.firebaseapp.com",
+    databaseURL: "https://baza-inzynierka-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "baza-inzynierka",
+    storageBucket: "baza-inzynierka.appspot.com",
+    messagingSenderId: "506280606966",
+    appId: "1:506280606966:web:c944e6d0935938c3ce80d7",
+    measurementId: "G-18X1DQJTK9"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const db = firebase.database();
+
+  /********** 2) ELEMENTY DOM **********/
+  const loginForm = document.getElementById("login-form");
+  const emailInput = document.getElementById("email");
+  const passInput = document.getElementById("password");
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+
+  const appDiv = document.getElementById("app");
+  const userEmailSpan = document.getElementById("userEmail");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const casesListDiv = document.getElementById("casesList");
+
+  // Szczegóły
+  const caseDetailsDiv = document.getElementById("caseDetails");
+  const detailNameSpan = document.getElementById("detailName");
+  const detailSurnameSpan = document.getElementById("detailSurname");
+  const detailPeselSpan = document.getElementById("detailPesel");
+  const detailPhoneSpan = document.getElementById("detailPhone");
+
+  const detailCarMarkSpan = document.getElementById("detailCarMark");
+  const detailCarModelSpan = document.getElementById("detailCarModel");
+  const detailCarFirstRegSpan = document.getElementById("detailCarFirstReg");
+  const detailCarPlatesSpan = document.getElementById("detailCarPlates");
+
+  const detailPoszkodSpan = document.getElementById("detailPoszkod");
+  const detailSprawcaSpan = document.getElementById("detailSprawca");
+  const detailSprawcaPlatesSpan = document.getElementById("detailSprawcaPlates");
+  const detailSprawcaMarkSpan = document.getElementById("detailSprawcaMark");
+
+  const detailSignatureImg = document.getElementById("detailSignature");
+  const pdfBtn = document.getElementById("pdfBtn");
+
+  /********** 3) LOGOWANIE / REJESTRACJA **********/
+  loginBtn.addEventListener("click", () => {
+    const email = emailInput.value.trim();
+    const pass = passInput.value.trim();
+    auth.signInWithEmailAndPassword(email, pass)
+      .catch(err => alert("Błąd logowania: " + err.message));
+  });
+
+  registerBtn.addEventListener("click", () => {
+    const email = emailInput.value.trim();
+    const pass = passInput.value.trim();
+    auth.createUserWithEmailAndPassword(email, pass)
+      .catch(err => alert("Błąd rejestracji: " + err.message));
+  });
+
+  logoutBtn.addEventListener("click", () => {
+    auth.signOut();
+  });
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      loginForm.style.display = "none";
+      appDiv.style.display = "block";
+      userEmailSpan.innerText = user.email;
+      loadUserCases(user.uid);
+    } else {
+      loginForm.style.display = "block";
+      appDiv.style.display = "none";
+    }
+  });
+
+  /********** 4) POBIERANIE LISTY CASE'ÓW **********/
+  function loadUserCases(uid) {
+    casesListDiv.innerHTML = "";
+    db.ref("cases")
+      .orderByChild("ownerId")
+      .equalTo(uid)
+      .once("value", snapshot => {
+        if (!snapshot.exists()) {
+          casesListDiv.innerHTML = "Brak case'ów!";
+          return;
         }
+        snapshot.forEach(childSnap => {
+          const caseData = childSnap.val();
+          createCaseItem(caseData);
+        });
       });
-    </script>
-  </body>
+  }
+
+  /********** 5) TWORZENIE POZYCJI NA LIŚCIE **********/
+  function createCaseItem(caseData) {
+    const div = document.createElement("div");
+    div.className = "case-item";
+
+    const title = document.createElement("h5");
+    title.innerText = `Case: ${caseData.clientName} ${caseData.clientSurname}`;
+    div.appendChild(title);
+
+    const shortDesc = document.createElement("p");
+    shortDesc.innerText = `Tel: ${caseData.clientPhone} | Samochód: ${caseData.carMark}`;
+    div.appendChild(shortDesc);
+
+    const detailsBtn = document.createElement("button");
+    detailsBtn.className = "btn btn-sm btn-info";
+    detailsBtn.innerText = "Szczegóły";
+    detailsBtn.addEventListener("click", () => {
+      showCaseDetails(caseData);
+    });
+    div.appendChild(detailsBtn);
+
+    casesListDiv.appendChild(div);
+  }
+
+  /********** 6) POKAZANIE FORMATKI SZCZEGÓŁÓW **********/
+  function showCaseDetails(caseData) {
+    detailNameSpan.innerText = caseData.clientName || "";
+    detailSurnameSpan.innerText = caseData.clientSurname || "";
+    detailPeselSpan.innerText = caseData.clientPesel || "";
+    detailPhoneSpan.innerText = caseData.clientPhone || "";
+
+    detailCarMarkSpan.innerText = caseData.carMark || "";
+    detailCarModelSpan.innerText = caseData.carModel || "";
+    detailCarFirstRegSpan.innerText = caseData.carFirstRegDate || "";
+    detailCarPlatesSpan.innerText = caseData.carPlates || "";
+
+    detailPoszkodSpan.innerText = caseData.poszkodInsurance || "";
+    detailSprawcaSpan.innerText = caseData.sprawcaInsurance || "";
+    detailSprawcaPlatesSpan.innerText = caseData.sprawcaCarPlates || "";
+    detailSprawcaMarkSpan.innerText = caseData.sprawcaCarMark || "";
+
+    if (caseData.signatureUrl) {
+      // Zamiast: detailSignatureImg.src = caseData.signatureUrl
+      // POBIERAMY i konwertujemy do base64:
+      fetch(caseData.signatureUrl)
+        .then(resp => {
+          if (!resp.ok) {
+            throw new Error("Błąd pobierania podpisu: " + resp.status);
+          }
+          return resp.blob();
+        })
+        .then(blob => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })
+        .then(base64Data => {
+          // Ustawiamy <img src="data:image/..."
+          detailSignatureImg.src = base64Data;
+          detailSignatureImg.style.display = "block";
+        })
+        .catch(err => {
+          console.error(err);
+          detailSignatureImg.src = "";
+          detailSignatureImg.style.display = "none";
+        });
+    } else {
+      detailSignatureImg.src = "";
+      detailSignatureImg.style.display = "none";
+    }
+
+    caseDetailsDiv.style.display = "block";
+
+    pdfBtn.onclick = () => {
+      downloadCaseAsPDF();
+    };
+  }
+
+  /********** 7) ZRZUT do PDF **********/
+  function downloadCaseAsPDF() {
+    pdfBtn.style.display = "none"; // ukrywamy przycisk
+    html2canvas(caseDetailsDiv, {
+      scale: 2,
+      backgroundColor: "#fff"
+    })
+      .then(canvas => {
+        pdfBtn.style.display = "inline-block"; // przywróć
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF("p", "pt", "a4");
+
+        const imgData = canvas.toDataURL("image/png");
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const ratio = canvas.height / canvas.width;
+        const imgWidth = pageWidth - 40; // margines
+        const imgHeight = imgWidth * ratio;
+
+        doc.addImage(imgData, "PNG", 20, 20, imgWidth, imgHeight);
+        doc.save("case.pdf");
+      })
+      .catch(err => {
+        console.error("Błąd generowania PDF:", err);
+        pdfBtn.style.display = "inline-block";
+      });
+  }
+</script>
+</body>
 </html>

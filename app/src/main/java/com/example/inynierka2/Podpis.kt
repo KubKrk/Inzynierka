@@ -43,18 +43,15 @@ class Podpis : AppCompatActivity() {
             signaturePad.clear()
         }
 
-        // Zapisz podpis
         buttonSaveSignature.setOnClickListener {
             if (signaturePad.isEmpty) {
                 Toast.makeText(this, "Brak podpisu!", Toast.LENGTH_SHORT).show()
             } else {
-                // Konwersja bitmapy do PNG
                 val signatureBitmap: Bitmap = signaturePad.signatureBitmap
                 val baos = ByteArrayOutputStream()
                 signatureBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
                 val data = baos.toByteArray()
 
-                // Upload do Storage
                 val storageRef: StorageReference =
                     storage.reference.child("signatures/${System.currentTimeMillis()}.png")
 
@@ -65,7 +62,6 @@ class Podpis : AppCompatActivity() {
                             DataHolder.currentCase?.signatureUrl = uri.toString()
                             Toast.makeText(this, "Podpis zapisany!", Toast.LENGTH_SHORT).show()
 
-                            // Wróć do NowyCase, user może dalej edytować albo zakończyć
                             val intent = Intent(this, NowyCase::class.java)
                             startActivity(intent)
                             finish()

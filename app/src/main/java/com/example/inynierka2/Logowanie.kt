@@ -35,7 +35,7 @@ class Logowanie : AppCompatActivity() {
         loginButton = findViewById(R.id.zaloguj12)
         registerButton = findViewById(R.id.zarej)
         forgotPasswordButton = findViewById(R.id.zapomniane)
-
+        rememberMeCheckBox = findViewById(R.id.rememberMeCheckBox)
 
         // Inicjalizacja SharedPreferences
         sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
