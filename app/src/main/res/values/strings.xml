@@ -44,4 +44,6 @@
     <string name="tablice_rejestracyjne_sprawcy">Tablice rejestracyjne sprawcy</string>
     <string name="marka_samochodu_sprawcy">Marka samochodu sprawcy</string>
     <string name="wy_lij">Wyślij</string>
+    <string name="ostatni_case">Ostatni case</string>
+    <string name="panel_zg_oszeniowy">Panel zgłoszeniowy</string>
 </resources>

@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".ResetHasla">
 
+    <TextView
+        android:id="@+id/logowanie2"
+        android:layout_width="415dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="48dp"
+        android:background="#2196F3"
+        android:text="Podaj e-mail wykorzystany do stworzenia konta"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.256"
+        tools:ignore="TextSizeCheck"
+        tools:visibility="visible" />
+
     <Button
         android:id="@+id/powrot"
         android:layout_width="wrap_content"

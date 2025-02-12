@@ -1,6 +1,8 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    "cases": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
   }
 }

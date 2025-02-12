@@ -13,7 +13,7 @@
         android:layout_width="209dp"
         android:layout_height="49dp"
         android:layout_marginBottom="48dp"
-        android:background="#CC9E9E"
+        android:background="#2196F3"
         android:text="@string/podaj_e_mail_i_has_o"
         android:textAlignment="center"
         android:textSize="24sp"
