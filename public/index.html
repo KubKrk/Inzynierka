@@ -2,35 +2,19 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8"/>
-  <title>Inżynierka – Strona Web (Zrzut do PDF)</title>
+  <title>Inżynierka – Strona Web</title>
   <!-- Bootstrap -->
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <style>
-    .case-item {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    .case-details {
-      border: 1px dashed #555;
-      padding: 10px;
-      margin-top: 20px;
-      display: none;
-      background-color: #fff;
-      color: #000;
-      position: relative;
-    }
-    .signature-img {
-      max-width: 300px;
-      display: block;
-      margin-top: 10px;
-    }
+    .case-item { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    /* Uwaga: ramka z przerywanymi kreskami widoczna jest tylko w widoku, a nie w PDF (tymczasowo ukrywana) */
+    .case-details { border: 1px dashed #555; padding: 10px; margin-top: 20px; display: none; background-color: #fff; color: #000; position: relative; }
+    .signature-img { max-width: 300px; display: block; margin-top: 10px; }
   </style>
 </head>
 <body class="container my-4">
 
-<h1>Inżynierka – Strona Web (Zrzut do PDF)</h1>
+<h1>Inżynierka – Strona Web</h1>
 <hr/>
 
 <!-- Formularz logowania -->
@@ -62,6 +46,8 @@
     <p><b>Nazwisko:</b> <span id="detailSurname"></span></p>
     <p><b>PESEL:</b> <span id="detailPesel"></span></p>
     <p><b>Telefon:</b> <span id="detailPhone"></span></p>
+    <!-- Nowe pole: Data wynajmu pojazdu -->
+    <p><b>Data wynajmu pojazdu:</b> <span id="detailRentalDate"></span></p>
 
     <p><b>Samochód:</b>
       Marka: <span id="detailCarMark"></span>,
@@ -76,11 +62,84 @@
     <p><b>Marka sprawcy:</b> <span id="detailSprawcaMark"></span></p>
 
     <p><b>Podpis:</b></p>
-    <!-- Tutaj wstawiamy base64 (dataURL) zamiast crossOrigin -->
     <img id="detailSignature" class="signature-img" alt="Podpis"/>
 
-    <!-- Przycisk generowania PDF (Zrzut) -->
-    <button class="btn btn-warning mt-3" id="pdfBtn">Pobierz PDF (zrzut)</button>
+    <!-- Przyciski do PDF i edycji -->
+    <button class="btn btn-warning mt-3" id="pdfBtn">Pobierz PDF</button>
+    <button class="btn btn-primary mt-3" id="editBtn">Edytuj</button>
+  </div>
+</div>
+
+<!-- Modal do edycji danych case'a -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edytuj case</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm">
+          <!-- Dane klienta -->
+          <h6>Dane klienta</h6>
+          <div class="mb-3">
+            <label for="editClientName" class="form-label">Imię</label>
+            <input type="text" class="form-control" id="editClientName">
+          </div>
+          <div class="mb-3">
+            <label for="editClientSurname" class="form-label">Nazwisko</label>
+            <input type="text" class="form-control" id="editClientSurname">
+          </div>
+          <div class="mb-3">
+            <label for="editPesel" class="form-label">PESEL</label>
+            <input type="text" class="form-control" id="editPesel">
+          </div>
+          <div class="mb-3">
+            <label for="editPhone" class="form-label">Telefon</label>
+            <input type="text" class="form-control" id="editPhone">
+          </div>
+          <hr/>
+          <!-- Dane samochodu -->
+          <h6>Dane samochodu</h6>
+          <div class="mb-3">
+            <label for="editCarMark" class="form-label">Marka</label>
+            <input type="text" class="form-control" id="editCarMark">
+          </div>
+          <div class="mb-3">
+            <label for="editCarModel" class="form-label">Model</label>
+            <input type="text" class="form-control" id="editCarModel">
+          </div>
+          <div class="mb-3">
+            <label for="editCarFirstReg" class="form-label">Data rejestracji</label>
+            <input type="text" class="form-control" id="editCarFirstReg">
+          </div>
+          <div class="mb-3">
+            <label for="editCarPlates" class="form-label">Tablice</label>
+            <input type="text" class="form-control" id="editCarPlates">
+          </div>
+          <hr/>
+          <!-- Ubezpieczenia -->
+          <h6>Ubezpieczenia</h6>
+          <div class="mb-3">
+            <label for="editPoszkod" class="form-label">Ubezpieczenie poszkodowanego</label>
+            <input type="text" class="form-control" id="editPoszkod">
+          </div>
+          <div class="mb-3">
+            <label for="editSprawca" class="form-label">Ubezpieczenie sprawcy</label>
+            <input type="text" class="form-control" id="editSprawca">
+          </div>
+          <div class="mb-3">
+            <label for="editSprawcaPlates" class="form-label">Tablice sprawcy</label>
+            <input type="text" class="form-control" id="editSprawcaPlates">
+          </div>
+          <div class="mb-3">
+            <label for="editSprawcaMark" class="form-label">Marka sprawcy</label>
+            <input type="text" class="form-control" id="editSprawcaMark">
+          </div>
+          <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -88,6 +147,8 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- html2canvas (do zrzutu) -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <!-- jsPDF do PDF -->
@@ -128,6 +189,7 @@
   const detailSurnameSpan = document.getElementById("detailSurname");
   const detailPeselSpan = document.getElementById("detailPesel");
   const detailPhoneSpan = document.getElementById("detailPhone");
+  const detailRentalDateSpan = document.getElementById("detailRentalDate");
 
   const detailCarMarkSpan = document.getElementById("detailCarMark");
   const detailCarModelSpan = document.getElementById("detailCarModel");
@@ -141,6 +203,7 @@
 
   const detailSignatureImg = document.getElementById("detailSignature");
   const pdfBtn = document.getElementById("pdfBtn");
+  const editBtn = document.getElementById("editBtn");
 
   /********** 3) LOGOWANIE / REJESTRACJA **********/
   loginBtn.addEventListener("click", () => {
@@ -186,6 +249,7 @@
         }
         snapshot.forEach(childSnap => {
           const caseData = childSnap.val();
+          caseData.id = childSnap.key; // dodajemy identyfikator do edycji
           createCaseItem(caseData);
         });
       });
@@ -197,7 +261,18 @@
     div.className = "case-item";
 
     const title = document.createElement("h5");
-    title.innerText = `Case: ${caseData.clientName} ${caseData.clientSurname}`;
+    // Dodajemy datę, jeśli pole createdAt istnieje
+    if (caseData.createdAt) {
+      const date = new Date(caseData.createdAt);
+      const formattedDate = date.toLocaleDateString('pl-PL', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      title.innerText = `Case: ${caseData.clientName} ${caseData.clientSurname} (${formattedDate})`;
+    } else {
+      title.innerText = `Case: ${caseData.clientName} ${caseData.clientSurname}`;
+    }
     div.appendChild(title);
 
     const shortDesc = document.createElement("p");
@@ -222,6 +297,21 @@
     detailPeselSpan.innerText = caseData.clientPesel || "";
     detailPhoneSpan.innerText = caseData.clientPhone || "";
 
+    // Ustawienie daty wynajmu pojazdu (z pola createdAt) z godziną i minutą
+    if (caseData.createdAt) {
+      const rentalDate = new Date(caseData.createdAt);
+      const formattedRentalDate = rentalDate.toLocaleString('pl-PL', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      detailRentalDateSpan.innerText = formattedRentalDate;
+    } else {
+      detailRentalDateSpan.innerText = "";
+    }
+
     detailCarMarkSpan.innerText = caseData.carMark || "";
     detailCarModelSpan.innerText = caseData.carModel || "";
     detailCarFirstRegSpan.innerText = caseData.carFirstRegDate || "";
@@ -233,8 +323,6 @@
     detailSprawcaMarkSpan.innerText = caseData.sprawcaCarMark || "";
 
     if (caseData.signatureUrl) {
-      // Zamiast: detailSignatureImg.src = caseData.signatureUrl
-      // POBIERAMY i konwertujemy do base64:
       fetch(caseData.signatureUrl)
         .then(resp => {
           if (!resp.ok) {
@@ -242,16 +330,13 @@
           }
           return resp.blob();
         })
-        .then(blob => {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
-        })
+        .then(blob => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        }))
         .then(base64Data => {
-          // Ustawiamy <img src="data:image/..."
           detailSignatureImg.src = base64Data;
           detailSignatureImg.style.display = "block";
         })
@@ -270,32 +355,93 @@
     pdfBtn.onclick = () => {
       downloadCaseAsPDF();
     };
+
+    // Ustawienie akcji przycisku edycji
+    editBtn.onclick = () => {
+      openEditModal(caseData);
+    };
   }
 
-  /********** 7) ZRZUT do PDF **********/
-  function downloadCaseAsPDF() {
-    pdfBtn.style.display = "none"; // ukrywamy przycisk
-    html2canvas(caseDetailsDiv, {
-      scale: 2,
-      backgroundColor: "#fff"
-    })
-      .then(canvas => {
-        pdfBtn.style.display = "inline-block"; // przywróć
+  /********** 7) OTWARCIE MODALU EDYCJI **********/
+  function openEditModal(caseData) {
+    // Wypełnienie pól formularza danymi z caseData
+    document.getElementById("editClientName").value = caseData.clientName || "";
+    document.getElementById("editClientSurname").value = caseData.clientSurname || "";
+    document.getElementById("editPesel").value = caseData.clientPesel || "";
+    document.getElementById("editPhone").value = caseData.clientPhone || "";
+    document.getElementById("editCarMark").value = caseData.carMark || "";
+    document.getElementById("editCarModel").value = caseData.carModel || "";
+    document.getElementById("editCarFirstReg").value = caseData.carFirstRegDate || "";
+    document.getElementById("editCarPlates").value = caseData.carPlates || "";
+    document.getElementById("editPoszkod").value = caseData.poszkodInsurance || "";
+    document.getElementById("editSprawca").value = caseData.sprawcaInsurance || "";
+    document.getElementById("editSprawcaPlates").value = caseData.sprawcaCarPlates || "";
+    document.getElementById("editSprawcaMark").value = caseData.sprawcaCarMark || "";
 
+    const editModal = new bootstrap.Modal(document.getElementById("editModal"));
+    editModal.show();
+
+    document.getElementById("editForm").onsubmit = function(e) {
+      e.preventDefault();
+      const updatedData = {
+        clientName: document.getElementById("editClientName").value.trim(),
+        clientSurname: document.getElementById("editClientSurname").value.trim(),
+        clientPesel: document.getElementById("editPesel").value.trim(),
+        clientPhone: document.getElementById("editPhone").value.trim(),
+        carMark: document.getElementById("editCarMark").value.trim(),
+        carModel: document.getElementById("editCarModel").value.trim(),
+        carFirstRegDate: document.getElementById("editCarFirstReg").value.trim(),
+        carPlates: document.getElementById("editCarPlates").value.trim(),
+        poszkodInsurance: document.getElementById("editPoszkod").value.trim(),
+        sprawcaInsurance: document.getElementById("editSprawca").value.trim(),
+        sprawcaCarPlates: document.getElementById("editSprawcaPlates").value.trim(),
+        sprawcaCarMark: document.getElementById("editSprawcaMark").value.trim()
+      };
+
+      db.ref("cases/" + caseData.id).update(updatedData)
+        .then(() => {
+          alert("Dane zostały zaktualizowane.");
+          editModal.hide();
+          loadUserCases(auth.currentUser.uid);
+          caseDetailsDiv.style.display = "none";
+        })
+        .catch(err => {
+          console.error("Błąd aktualizacji danych:", err);
+          alert("Wystąpił błąd podczas zapisu zmian.");
+        });
+    };
+  }
+
+  /********** 8) ZRZUT do PDF **********/
+  function downloadCaseAsPDF() {
+    // Tymczasowo ukrywamy przycisk edycji i usuwamy ramkę, aby nie były widoczne w PDF
+    const originalEditDisplay = editBtn.style.display;
+    const originalBorder = caseDetailsDiv.style.border;
+    editBtn.style.display = "none";
+    caseDetailsDiv.style.border = "none";
+
+    pdfBtn.style.display = "none";
+    html2canvas(caseDetailsDiv, { scale: 2, backgroundColor: "#fff" })
+      .then(canvas => {
+        // Przywracamy style
+        editBtn.style.display = originalEditDisplay;
+        caseDetailsDiv.style.border = originalBorder;
+        pdfBtn.style.display = "inline-block";
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF("p", "pt", "a4");
-
         const imgData = canvas.toDataURL("image/png");
         const pageWidth = doc.internal.pageSize.getWidth();
         const ratio = canvas.height / canvas.width;
-        const imgWidth = pageWidth - 40; // margines
+        const imgWidth = pageWidth - 40;
         const imgHeight = imgWidth * ratio;
-
         doc.addImage(imgData, "PNG", 20, 20, imgWidth, imgHeight);
         doc.save("case.pdf");
       })
       .catch(err => {
         console.error("Błąd generowania PDF:", err);
+        // Przywracamy style w razie błędu
+        editBtn.style.display = originalEditDisplay;
+        caseDetailsDiv.style.border = originalBorder;
         pdfBtn.style.display = "inline-block";
       });
   }

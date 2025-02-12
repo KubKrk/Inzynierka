@@ -100,6 +100,9 @@ class NowyCase : AppCompatActivity() {
         val user = auth.currentUser
         case.ownerId = user?.uid ?: ""
 
+        // Dodajemy datę utworzenia (pole createdAt powinno być zdefiniowane w CaseData)
+        case.createdAt = System.currentTimeMillis()
+
         val casesRef = database.getReference("cases")
         val newCaseRef = casesRef.push()
         val newCaseId = newCaseRef.key
@@ -112,9 +115,7 @@ class NowyCase : AppCompatActivity() {
         newCaseRef.setValue(case)
             .addOnSuccessListener {
                 Toast.makeText(this, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
-
                 DataHolder.currentCase = null
-
                 val intent = Intent(this, StronaGlowna::class.java)
                 startActivity(intent)
                 finish()

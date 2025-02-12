@@ -23,5 +23,7 @@ data class CaseData(
     var signatureUrl: String = "",
 
     // ID właściciela (użytkownika Firebase)
-    var ownerId: String = ""
+    var ownerId: String = "",
+
+    var createdAt: Long = 0L
 )
